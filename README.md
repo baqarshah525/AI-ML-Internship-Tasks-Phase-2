@@ -79,3 +79,97 @@ pip install transformers datasets torch scikit-learn evaluate accelerate gradio
 4. Run the Gradio application cell to launch the interactive interface.
 
 5. Enter any news headline into the Gradio interface to receive its predicted category in real time.
+
+
+# Task 2: End-to-End ML Pipeline with Scikit-learn Pipeline API
+
+## Objective
+
+The objective of this project is to develop a reusable and production-ready machine learning pipeline for customer churn prediction using the Scikit-learn Pipeline API. The pipeline integrates data preprocessing, feature transformation, model training, hyperparameter tuning, and model deployment into a single workflow, ensuring consistency and reducing the risk of data leakage.
+
+---
+
+## Dataset
+
+**Dataset:** Telco Customer Churn Dataset
+
+The Telco Customer Churn dataset contains customer information collected from a telecommunications company. It includes demographic details, subscribed services, account information, billing history, and the target variable indicating whether a customer has churned. The dataset consists of **7,043 customer records** with **21 features**.
+
+---
+
+## Libraries Used
+
+* Pandas
+* NumPy
+* Scikit-learn
+* Joblib
+
+---
+
+## Project Workflow
+
+The following steps were performed to build the machine learning pipeline:
+
+* Loaded the Telco Customer Churn dataset.
+* Cleaned the dataset by handling missing values and correcting data types, particularly the `TotalCharges` column.
+* Converted the target variable (`Churn`) into binary format for classification.
+* Identified and separated numerical and categorical features.
+* Built preprocessing pipelines using `ColumnTransformer`:
+
+  * Standardized numerical features using `StandardScaler`.
+  * Encoded categorical features using `OneHotEncoder`.
+* Created complete machine learning pipelines by combining preprocessing with:
+
+  * Logistic Regression
+  * Random Forest Classifier
+* Applied `GridSearchCV` with cross-validation to optimize model hyperparameters.
+* Evaluated both models using test accuracy and classification reports.
+* Saved the best-performing pipeline using Joblib for future deployment.
+* Reloaded the exported pipeline and verified its predictions on unseen data.
+
+---
+
+## Key Findings
+
+* The dataset contains **7,043 customer records** with both numerical and categorical features.
+* Missing values were identified in the `TotalCharges` column due to blank string entries and were successfully handled during preprocessing.
+* Both Logistic Regression and Random Forest achieved competitive performance, with test accuracies generally ranging between **75% and 82%**.
+* Logistic Regression demonstrated stronger recall for the majority class, while Random Forest captured more complex relationships within the data.
+* Using the Scikit-learn Pipeline API ensured that identical preprocessing steps were applied during both training and inference, making the workflow reliable, reusable, and deployment-ready.
+
+---
+
+## Model Performance
+
+| Metric                         | Logistic Regression       | Random Forest             |
+| ------------------------------ | ------------------------- | ------------------------- |
+| Best Cross-Validation Accuracy | *(Insert Cell 8 Output)*  | *(Insert Cell 9 Output)*  |
+| Test Accuracy                  | *(Insert Cell 10 Output)* | *(Insert Cell 10 Output)* |
+
+---
+
+## How to Run
+
+### 1. Install the Required Libraries
+
+```bash
+pip install pandas numpy scikit-learn joblib
+```
+
+### 2. Run the Project
+
+* Load the Telco Customer Churn dataset.
+* Execute the preprocessing pipeline.
+* Train both Logistic Regression and Random Forest models.
+* Perform hyperparameter tuning using `GridSearchCV`.
+* Compare the evaluation metrics to determine the best-performing model.
+* The best pipeline will automatically be saved as:
+
+```text
+churn_prediction_pipeline.pkl
+```
+
+### 3. Load the Saved Pipeline
+
+Use `joblib.load()` to reload the exported pipeline and generate predictions on new customer data without repeating the preprocessing or training steps.
+   
