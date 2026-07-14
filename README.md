@@ -173,3 +173,119 @@ churn_prediction_pipeline.pkl
 
 Use `joblib.load()` to reload the exported pipeline and generate predictions on new customer data without repeating the preprocessing or training steps.
    
+
+# Task 3: Multimodal Machine Learning – Housing Price Prediction Using Images and Tabular Data
+
+## Objective
+
+The objective of this project is to develop a multimodal machine learning model capable of predicting house prices by combining structured housing information with property images. The model uses a Convolutional Neural Network (CNN) to learn visual features from house images and a Multi-Layer Perceptron (MLP) to process tabular features. The extracted representations are fused to produce a single house price prediction.
+
+## Dataset
+
+**Dataset:** Houses Dataset (Ahmed & Moustafa)
+
+The dataset consists of **535 residential properties**, where each property contains both structured data and image data.
+
+### Tabular Features
+
+* Number of bedrooms
+* Number of bathrooms
+* House area (square feet)
+* Zip code
+* House price (target variable)
+
+### Image Features
+
+Each property includes four images representing different views:
+
+* Front exterior
+* Bedroom
+* Bathroom
+* Kitchen
+
+## Technologies and Libraries
+
+The project was implemented using the following Python libraries:
+
+* NumPy
+* Pandas
+* OpenCV
+* TensorFlow / Keras
+* Scikit-learn
+
+## Project Workflow
+
+The following steps were performed during model development:
+
+* Loaded the housing dataset containing both tabular information and property images.
+* Combined the four images of each house into a single collage image for CNN processing.
+* Preprocessed the tabular features using **MinMaxScaler**.
+* Normalized image pixel values to improve CNN training.
+* Split the dataset into training and testing sets while maintaining alignment between images, tabular features, and target values.
+* Designed a CNN branch to extract visual features from the collage images.
+* Built an MLP branch to learn feature representations from the tabular data.
+* Fused the outputs of both branches using a **Concatenate** layer.
+* Added fully connected regression layers to predict the final house price.
+* Trained the multimodal model end-to-end.
+* Evaluated the trained model using **Mean Absolute Error (MAE)** and **Root Mean Squared Error (RMSE)**.
+* Saved the trained model for future inference and deployment.
+
+## Results and Observations
+
+Several observations were made during experimentation:
+
+* The dataset contains only **535 samples**, which limits the CNN's ability to learn highly robust visual features.
+* House prices vary significantly, ranging from **$22,000** to **$5,858,000**, resulting in a highly skewed target distribution.
+* The average house price is approximately **$589,363**, while the median price is around **$529,000**.
+* The presence of expensive outlier properties increases the difficulty of the regression task.
+* Combining image features with structured housing attributes enables the model to capture complementary information from both data sources, resulting in a more informative prediction than relying on either modality alone.
+
+## Model Performance
+
+| Metric                         |           Value |
+| ------------------------------ | --------------: |
+| Mean Absolute Error (MAE)      | **$285,289.48** |
+| Root Mean Squared Error (RMSE) | **$376,616.60** |
+
+## Performance Analysis
+
+The model achieved reasonable performance considering the limited dataset size and the large variation in house prices. However, prediction errors remain relatively high because of:
+
+* Small training dataset
+* Large price variability
+* Presence of high-value outlier properties
+* Training the CNN from scratch on a limited number of images
+
+Future improvements may include:
+
+* Applying a logarithmic transformation to the target variable.
+* Using transfer learning with pretrained CNN models such as **MobileNetV2**, **EfficientNet**, or **ResNet50**.
+* Performing image augmentation to improve generalization.
+* Engineering additional tabular features to provide richer information for prediction.
+
+## How to Run the Project
+
+1. Install the required dependencies:
+
+```bash
+pip install numpy pandas opencv-python tensorflow scikit-learn
+```
+
+2. Download or clone the Houses Dataset repository.
+
+3. Ensure that both the image files and the tabular dataset are placed in the correct project directories.
+
+4. Run the notebook or Python script to:
+
+   * Load and preprocess the data
+   * Build the CNN and MLP branches
+   * Train the multimodal fusion model
+   * Evaluate the model
+
+5. After training, the model will be saved as:
+
+```
+housing_multimodal_model.keras
+```
+
+(or `housing_multimodal_model.h5`, depending on the selected save format).
